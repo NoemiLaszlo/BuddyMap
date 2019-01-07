@@ -5,18 +5,19 @@ namespace BuddyMap.Models
 {
     public class Student
     {
-        [Key] public int StudentId { get; set; }
+        [Key] public int Id { get; set; }
+
         public string Name { get; set; }
-        public int StudentGroupId { get; set; }
+        //public int StudentGroupId { get; set; }
         public string Email { get; set; }
 
-        public List<AnswerStudent> AnswerStudents { get; set; }
+        //public List<XXAnswerStudent> AnswerStudents { get; set; }
 
-        public Student(int studentId, string name, int studentGroupId, string email)
+        public Student(int studentId, string name, string email)
         {
-            StudentId = studentId;
+            Id = studentId;
             Name = name;
-            StudentGroupId = studentGroupId;
+            //StudentGroupId = studentGroupId;
             Email = email;
         }
 

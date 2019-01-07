@@ -1,8 +1,15 @@
-﻿namespace BuddyMap.Models
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+
+namespace BuddyMap.Models
 {
     public class QuestionGroup
     {
-        public int QuestionGroupId { get; set; }
+        [Key]
+        public int Id { get; set; }
+
+        //public int QuestionGroupId { get; set; }
         public string QuestionGroupName { get; set; }
+        public List<Question> Questions { get; set; }
     }
 }

@@ -10,22 +10,22 @@ using BuddyMap.Models;
 
 namespace BuddyMap.Controllers
 {
-    public class StudentsController : Controller
+    public class AnswerGroupsController : Controller
     {
         private readonly Context _context;
 
-        public StudentsController(Context context)
+        public AnswerGroupsController(Context context)
         {
             _context = context;
         }
 
-        // GET: Students
+        // GET: AnswerGroups
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Student.ToListAsync());
+            return View(await _context.AnswerGroup.ToListAsync());
         }
 
-        // GET: Students/Details/5
+        // GET: AnswerGroups/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -33,39 +33,66 @@ namespace BuddyMap.Controllers
                 return NotFound();
             }
 
-            var student = await _context.Student
+            var answerGroup = await _context.AnswerGroup
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (student == null)
+            if (answerGroup == null)
             {
                 return NotFound();
             }
 
-            return View(student);
+            answerGroup.Answers = await _context.Answer
+                .Where(ans => ans.AnswerGroupId == answerGroup.Id)
+                .ToListAsync();
+            answerGroup.Answers.ForEach(
+                ans =>
+                {
+                    ans.AnswerElements = _context.AnswerElement
+                      .Where(anselem => anselem.AnswerId == ans.Id)
+                      .ToList();
+                });
+
+            return View(answerGroup);
         }
 
-        // GET: Students/Create
+        // GET: AnswerGroups/Create
         public IActionResult Create()
         {
+            //_context.
+            ViewBag.StudentList = _context.Student; //SG .Except(this.);
+            ViewBag.Question = _context.Question; //QG
+
             return View();
         }
 
-        // POST: Students/Create
+        // POST: AnswerGroups/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Email")] Student student)
+        public async Task<IActionResult> Create([Bind("Id,SubmitterId")] AnswerGroup AnswerGroup)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(student);
+                var campaignAnswerDb = _context.Add(AnswerGroup);
+                //_context.Add(new Student() { Name = "Blah" });
+                var answerdb = _context.Add(new Answer()
+                {
+                    AnswerGroupId = campaignAnswerDb.Entity.Id,
+                    QuestionId = 1
+                });
+                var answerelem = _context.Add(new AnswerElement()
+                {
+                    AnswerId = answerdb.Entity.Id,
+                    StudentId = 22,
+                });
+
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(student);
+            return View(AnswerGroup);
         }
 
-        // GET: Students/Edit/5
+        // GET: AnswerGroups/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -73,22 +100,22 @@ namespace BuddyMap.Controllers
                 return NotFound();
             }
 
-            var student = await _context.Student.FindAsync(id);
-            if (student == null)
+            var AnswerGroup = await _context.AnswerGroup.FindAsync(id);
+            if (AnswerGroup == null)
             {
                 return NotFound();
             }
-            return View(student);
+            return View(AnswerGroup);
         }
 
-        // POST: Students/Edit/5
+        // POST: AnswerGroups/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Email")] Student student)
+        public async Task<IActionResult> Edit(int id, [Bind("Id")] AnswerGroup AnswerGroup)
         {
-            if (id != student.Id)
+            if (id != AnswerGroup.Id)
             {
                 return NotFound();
             }
@@ -97,12 +124,12 @@ namespace BuddyMap.Controllers
             {
                 try
                 {
-                    _context.Update(student);
+                    _context.Update(AnswerGroup);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!StudentExists(student.Id))
+                    if (!AnswerGroupExists(AnswerGroup.Id))
                     {
                         return NotFound();
                     }
@@ -113,10 +140,10 @@ namespace BuddyMap.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(student);
+            return View(AnswerGroup);
         }
 
-        // GET: Students/Delete/5
+        // GET: AnswerGroups/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -124,30 +151,30 @@ namespace BuddyMap.Controllers
                 return NotFound();
             }
 
-            var student = await _context.Student
+            var AnswerGroup = await _context.AnswerGroup
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (student == null)
+            if (AnswerGroup == null)
             {
                 return NotFound();
             }
 
-            return View(student);
+            return View(AnswerGroup);
         }
 
-        // POST: Students/Delete/5
+        // POST: AnswerGroups/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var student = await _context.Student.FindAsync(id);
-            _context.Student.Remove(student);
+            var AnswerGroup = await _context.AnswerGroup.FindAsync(id);
+            _context.AnswerGroup.Remove(AnswerGroup);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool StudentExists(int id)
+        private bool AnswerGroupExists(int id)
         {
-            return _context.Student.Any(e => e.Id == id);
+            return _context.AnswerGroup.Any(e => e.Id == id);
         }
     }
 }

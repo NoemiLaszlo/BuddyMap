@@ -1,5 +1,4 @@
 ﻿using BuddyMap.DataAccess;
-using BuddyMap.Models.Generator;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -29,10 +28,17 @@ namespace BuddyMap
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-
+            DbContextOptionsBuilder optionsdb = null;
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-            services.AddDbContext<Context>(opt => opt.UseInMemoryDatabase());
-            services.AddSingleton<DataGenerator>();
+            services.AddDbContext<Context>(opts =>
+                optionsdb = opts.UseInMemoryDatabase("dbsamplename"));
+            //services.AddSingleton<MemoryDB>(MemoryDB.GetInstance());
+
+            //using (var ctx = new Context(optionsdb.Options))
+            //{
+            //    ctx.Answers.Add(new Models.Answer() { AnswerId = 1, CampaignId = 2, QuestionId = 3 });
+            //}
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

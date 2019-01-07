@@ -1,6 +1,6 @@
 ﻿namespace BuddyMap.Models
 {
-    public class AnswerStudent
+    public class XXAnswerStudent
     {
         public int AnswerId { get; set; }
         public Answer Answer { get; set; }
