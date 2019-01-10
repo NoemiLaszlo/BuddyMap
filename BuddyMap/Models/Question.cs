@@ -18,5 +18,9 @@ namespace BuddyMap.Models
             NumOfAnswers = numOfAnswers;
             //QuestionGroupId = questionGroupId;
         }
+
+        public Question()
+        {
+        }
     }
 }

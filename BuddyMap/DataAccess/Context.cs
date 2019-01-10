@@ -8,7 +8,7 @@ namespace BuddyMap.DataAccess
         public Context(DbContextOptions<Context> options)
             : base(options)
         {
-            var x = 1;
+            //var x = 1;
         }
 
         public DbSet<Student> Student { get; set; }

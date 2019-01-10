@@ -11,5 +11,9 @@ namespace BuddyMap.Models
         //public int QuestionGroupId { get; set; }
         public string QuestionGroupName { get; set; }
         public List<Question> Questions { get; set; }
+
+        public QuestionGroup()
+        {
+        }
     }
 }
