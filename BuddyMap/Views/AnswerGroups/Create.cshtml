@@ -20,10 +20,8 @@
             <form asp-action="Create">
                 @Html.DropDownListFor(model => model.SubmitterId, new SelectList(ViewBag.StudentList as IEnumerable<Student>, "Id", "Name"))
                 @foreach (Student item in ViewBag.StudentList)
-                {
-                    <li>
-                        @item.Name
-                    </li>
+                {                   
+                    @item.Name                    
                 }
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <div class="form-group">

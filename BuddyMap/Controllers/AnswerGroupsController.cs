@@ -57,7 +57,6 @@ namespace BuddyMap.Controllers
         // GET: AnswerGroups/Create
         public IActionResult Create()
         {
-            //_context.
             ViewBag.StudentList = _context.Student; //SG .Except(this.);
             ViewBag.Question = _context.Question; //QG
 

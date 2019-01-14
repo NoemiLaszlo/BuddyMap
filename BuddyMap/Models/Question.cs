@@ -1,8 +1,11 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using BuddyMap.DataAccess;
+using System.Collections;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace BuddyMap.Models
 {
-    public class Question
+    public class Question 
     {
         [Key]
         public int Id { get; set; }
@@ -22,5 +25,6 @@ namespace BuddyMap.Models
         public Question()
         {
         }
+        
     }
 }

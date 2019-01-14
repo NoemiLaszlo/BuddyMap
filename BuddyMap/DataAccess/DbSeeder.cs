@@ -31,7 +31,7 @@ namespace BuddyMap.DataAccess
         private static void SeedStudents(Context context)
         {
             context.Database.EnsureCreated();
-            context.Student.Add(new Student(){ Name = "Noe", Email = "noe@email.com"});
+            context.Student.Add(new Student() { Name = "Noe", Email = "noe@email.com" });
             context.Student.Add(new Student() { Name = "Atti", Email = "atti@email.com" });
             context.Student.Add(new Student() { Name = "Tomi", Email = "tomi@email.com" });
             context.SaveChanges();
@@ -57,11 +57,13 @@ namespace BuddyMap.DataAccess
 
         private static void SeedQuestionGroups(Context context)
         {
+
             context.Database.EnsureCreated();
+            var q = context.Question.Where(question => question.Id == 2).First();            
             context.QuestionGroup.Add(new QuestionGroup() { QuestionGroupName = "Proba1",
-                                                            Questions = new List<Question>() {
-                                                                
-                                                            } });
+                                                            Questions = new List<Question>() { q }
+                                                           });
+            
             context.SaveChanges();
         }
     }

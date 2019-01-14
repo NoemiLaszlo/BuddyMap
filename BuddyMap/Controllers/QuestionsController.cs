@@ -22,6 +22,7 @@ namespace BuddyMap
         // GET: Questions
         public async Task<IActionResult> Index()
         {
+            ViewBag.QuestionGroup = _context.QuestionGroup.ToList(); //QG
             return View(await _context.Question.ToListAsync());
         }
 
@@ -33,14 +34,15 @@ namespace BuddyMap
                 return NotFound();
             }
 
+            
             var question = await _context.Question
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (question == null)
             {
                 return NotFound();
             }
-
-            return View(question);
+            //var tuple = new Tuple<Question, QuestionGroup>(question, new QuestionGroup());
+            return View();
         }
 
         // GET: Questions/Create
