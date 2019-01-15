@@ -48,6 +48,7 @@ namespace BuddyMap
         // GET: Questions/Create
         public IActionResult Create()
         {
+            ViewBag.QuestionGroup = _context.QuestionGroup.ToList();
             return View();
         }
 
@@ -56,7 +57,7 @@ namespace BuddyMap
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,QuestionText,NumOfAnswers")] Question question)
+        public async Task<IActionResult> Create([Bind("QuestionText,NumOfAnswers,QQGConnection")] Question question)
         {
             if (ModelState.IsValid)
             {

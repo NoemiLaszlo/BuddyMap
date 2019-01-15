@@ -22,6 +22,17 @@ namespace BuddyMap.DataAccess
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            //ManytoMany
+            modelBuilder.Entity<QQGConnection>()
+                .HasKey(elem => new { elem.QuestionId, elem.QuestionGroupId });               
+            modelBuilder.Entity<QQGConnection>()
+                .HasOne(elem => elem.Question)
+                .WithMany(elem => elem.QQGConnection)
+                .HasForeignKey(elem => elem.QuestionId);
+            modelBuilder.Entity<QQGConnection>()
+               .HasOne(elem => elem.QuestionGroup)
+               .WithMany(elem => elem.QQGConnection)
+               .HasForeignKey(elem => elem.QuestionGroupId);
             //modelBuilder.Entity<AnswerGroup>()
             //    .HasMany(elem => elem.Answers)
             //    .WithOne();

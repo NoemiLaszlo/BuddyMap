@@ -49,9 +49,9 @@ namespace BuddyMap.DataAccess
         private static void SeedQuestions(Context context)
         {
             context.Database.EnsureCreated();
-            context.Question.Add(new Question() { QuestionText = "Az első kérdés?", NumOfAnswers = 1 });
-            context.Question.Add(new Question() { QuestionText = "A második kérdés?", NumOfAnswers = 2 });
-            context.Question.Add(new Question() { QuestionText = "A harmadik kérdés?", NumOfAnswers = 3 });
+            context.Question.Add(new Question() { QuestionText = "Az első kérdés?", NumOfAnswers = 1, QQGConnection = { } });
+            context.Question.Add(new Question() { QuestionText = "A második kérdés?", NumOfAnswers = 2, QQGConnection = { } });
+            context.Question.Add(new Question() { QuestionText = "A harmadik kérdés?", NumOfAnswers = 3, QQGConnection = { } });
             context.SaveChanges();
         }
 
@@ -63,7 +63,11 @@ namespace BuddyMap.DataAccess
             context.QuestionGroup.Add(new QuestionGroup() { QuestionGroupName = "Proba1",
                                                             Questions = new List<Question>() { q }
                                                            });
-            
+            var k = context.Question.Where(question => question.Id == 3).First();
+            context.QuestionGroup.Add(new QuestionGroup() { QuestionGroupName = "Proba2",
+                                                            Questions = new List<Question>() { k }
+                                                           });
+
             context.SaveChanges();
         }
     }

@@ -7,10 +7,9 @@ namespace BuddyMap.Models
     {
         [Key]
         public int Id { get; set; }
-
-        //public int QuestionGroupId { get; set; }
         public string QuestionGroupName { get; set; }
-        public List<Question> Questions { get; set; }
+        public List<QQGConnection> QQGConnection { get; set; }
+        public List<Question> Questions { get; internal set; }
 
         public QuestionGroup()
         {

@@ -2,8 +2,8 @@
        
 
 @{
-    Layout = null;
-}
+        Layout = null;
+    }
 
 <!DOCTYPE html>
 
@@ -36,7 +36,7 @@
         </thead>
         <tbody>
             @foreach (var item in Model)
-            {
+{
                 <tr>
                     <td>
                         @Html.DisplayFor(modelItem => item.Id)
@@ -48,12 +48,11 @@
                         @Html.DisplayFor(modelItem => item.NumOfAnswers)
                     </td>
                     <td>
-                        @{ IEnumerable<QuestionGroup> questionGroups = ((List<QuestionGroup>)ViewBag.QuestionGroup).Where(qg => qg.Questions.Contains(item)).ToList();}
+                        @{IEnumerable<QuestionGroup> questionGroups = ((List<QuestionGroup>)ViewBag.QuestionGroup).Where(qg => qg.Questions.Contains(item)).ToList();}
                         @foreach (QuestionGroup itemy in questionGroups)
-                        {
-                            @itemy.QuestionGroupName                          
-                            
-                        }
+                         {
+                            @itemy.QuestionGroupName
+                         }
                     </td>
                     <td>
                         <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |

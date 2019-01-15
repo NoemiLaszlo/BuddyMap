@@ -12,14 +12,14 @@ namespace BuddyMap.Models
 
         public string QuestionText { get; set; }
         public int NumOfAnswers { get; set; }
-        //public int QuestionGroupId { get; set; }
+        public List<QQGConnection> QQGConnection { get; set; }
 
-        public Question(int id, string questionText, int numOfAnswers/*, int questionGroupId*/)
+        public Question(int id, string questionText, int numOfAnswers, List<QQGConnection> qQGonnection)
         {
             Id = id;
             QuestionText = questionText;
             NumOfAnswers = numOfAnswers;
-            //QuestionGroupId = questionGroupId;
+            QQGConnection = qQGonnection;
         }
 
         public Question()
