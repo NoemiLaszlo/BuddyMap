@@ -1,11 +1,9 @@
-﻿@model BuddyMap.Models.Question
-
+﻿
+@model BuddyMap.ViewModels.QuestionCreate
 @{
     Layout = null;
 }
-
 <!DOCTYPE html>
-
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
@@ -13,7 +11,6 @@
     <title>Create</title>
 </head>
 <body>
-
 <h4>Question</h4>
 <hr />
 <div class="row">
@@ -21,21 +18,23 @@
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="QuestionText" class="control-label"></label>
-                <input asp-for="QuestionText" class="form-control" />
-                <span asp-validation-for="QuestionText" class="text-danger"></span>
+                <label asp-for="Questions.QuestionText" class="control-label"></label>
+                <input asp-for="Questions.QuestionText" class="form-control" required="required" />
+                <span asp-validation-for="Questions.QuestionText" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="NumOfAnswers" class="control-label"></label>
-                <input asp-for="NumOfAnswers" class="form-control" />
-                <span asp-validation-for="NumOfAnswers" class="text-danger"></span>
+                <label asp-for="Questions.NumOfAnswers" class="control-label"></label>
+                <input asp-for="Questions.NumOfAnswers" class="form-control" required="required" />
+                <span asp-validation-for="Questions.NumOfAnswers" class="text-danger"></span>
             </div>
             <div class="form-group">
-                @Html.DropDownListFor(model => model.Id, new SelectList(ViewBag.QuestionGroup as IEnumerable<QuestionGroup>, "Id", "QuestionGroupName"))
-                @foreach (QuestionGroup item in ViewBag.QuestionGroup)
-                {
-                    @item.QuestionGroupName
-                }
+                @Html.LabelFor(m => m.SelectedQGId)
+                <br>
+                @Html.DropDownListFor(m => m.SelectedQGId, Model.QGItems, "Label", htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.SelectedQGId)
+                @*@Html.DropDownListFor(model => model.Questions.Id,
+         (ViewBag.QuestionGroup as IEnumerable<QuestionGroup>).Select(qg => new SelectListItem(qg.QuestionGroupName, qg.Id.ToString())),
+        /*"--Select--"*/ htmlAttributes: new { @class = "form-control", @data_rel = "selected" })*@
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-default" />

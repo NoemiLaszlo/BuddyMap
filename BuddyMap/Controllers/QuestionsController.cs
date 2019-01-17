@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using BuddyMap.DataAccess;
 using BuddyMap.Models;
+using BuddyMap.ViewModels;
 
 namespace BuddyMap
 {
@@ -18,6 +19,36 @@ namespace BuddyMap
         {
             _context = context;
         }
+
+        public ActionResult GetQuestionCreate()
+        {
+            QuestionCreate questionCreate = new QuestionCreate();
+            questionCreate.Questions = GetQuestionModel();
+            questionCreate.QuestionGroups = GetQuestionGroupModel();
+            return View(questionCreate);
+        }
+
+        private Question GetQuestionModel()
+        {
+            Question q = new Question()
+            {
+                QuestionText = "Question1",
+                NumOfAnswers = 3
+            };
+                                 
+            return q;
+        }
+
+        private List<QuestionGroup> GetQuestionGroupModel()
+        {
+            List<QuestionGroup> qg = new List<QuestionGroup>();
+            qg.Add(new QuestionGroup() { QuestionGroupName = "QuestionGroup1" });
+            qg.Add(new QuestionGroup() { QuestionGroupName = "QuestionGroup2" });
+
+            return qg;
+        }
+
+        
 
         // GET: Questions
         public async Task<IActionResult> Index()
@@ -57,15 +88,15 @@ namespace BuddyMap
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("QuestionText,NumOfAnswers,QQGConnection")] Question question)
+        public async Task<IActionResult> Create(QuestionCreate questionCreate)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(question);
+                _context.Add(questionCreate);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(question);
+            return View(questionCreate);
         }
 
         // GET: Questions/Edit/5

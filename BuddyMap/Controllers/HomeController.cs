@@ -34,10 +34,10 @@ namespace BuddyMap.Controllers
             return View();
         }
 
-        public IActionResult Question()
-        {
-            return View();
-        }
+        //public IActionResult Question()
+        //{
+        //    return View();
+        //}
 
         public IActionResult Answer()
         {

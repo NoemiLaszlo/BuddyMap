@@ -18,7 +18,7 @@ namespace BuddyMap.DataAccess
         public DbSet<AnswerElement> AnswerElement { get; set; }
         public DbSet<Question> Question { get; set; }
         public DbSet<QuestionGroup> QuestionGroup { get; set; }
-        public DbSet<Campaign> Campaign { get; set; }
+        public DbSet<Campaign> Campaign { get; set; }        
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

@@ -9,7 +9,6 @@ namespace BuddyMap.Models
     {
         [Key]
         public int Id { get; set; }
-
         public string QuestionText { get; set; }
         public int NumOfAnswers { get; set; }
         public List<QQGConnection> QQGConnection { get; set; }
