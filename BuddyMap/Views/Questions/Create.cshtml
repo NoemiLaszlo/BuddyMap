@@ -18,23 +18,19 @@
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="Questions.QuestionText" class="control-label"></label>
-                <input asp-for="Questions.QuestionText" class="form-control" required="required" />
-                <span asp-validation-for="Questions.QuestionText" class="text-danger"></span>
+                <label asp-for="Question.QuestionText" class="control-label"></label>
+                <input asp-for="Question.QuestionText" class="form-control" required="required" />
+                <span asp-validation-for="Question.QuestionText" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Questions.NumOfAnswers" class="control-label"></label>
-                <input asp-for="Questions.NumOfAnswers" class="form-control" required="required" />
-                <span asp-validation-for="Questions.NumOfAnswers" class="text-danger"></span>
+                <label asp-for="Question.NumOfAnswers" class="control-label"></label>
+                <input asp-for="Question.NumOfAnswers" class="form-control" required="required" />
+                <span asp-validation-for="Question.NumOfAnswers" class="text-danger"></span>
             </div>
             <div class="form-group">
-                @Html.LabelFor(m => m.SelectedQGId)
                 <br>
-                @Html.DropDownListFor(m => m.SelectedQGId, Model.QGItems, "Label", htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(m => m.SelectedQGId)
-                @*@Html.DropDownListFor(model => model.Questions.Id,
-         (ViewBag.QuestionGroup as IEnumerable<QuestionGroup>).Select(qg => new SelectListItem(qg.QuestionGroupName, qg.Id.ToString())),
-        /*"--Select--"*/ htmlAttributes: new { @class = "form-control", @data_rel = "selected" })*@
+                <select asp-for="SelectedQGId" class="form-control" asp-items="@(new SelectList(Model.QuestionGroups, "Id", "QuestionGroupName"))"></select>
+                @*@Html.DropDownListFor(m => m.SelectedQGId, Model.QCItems, "Id", "QuestionGroupName")*@
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-default" />

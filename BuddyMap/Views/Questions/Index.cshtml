@@ -16,13 +16,13 @@
         <thead>
             <tr>
                 <th>
-                    @Html.DisplayNameFor(model => model.Id)
+                    @Html.DisplayNameFor(q => q.Id)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.QuestionText)
+                    @Html.DisplayNameFor(q => q.QuestionText)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.NumOfAnswers)
+                    @Html.DisplayNameFor(q => q.NumOfAnswers)
                 </th>
                 <th>         
                    
@@ -30,29 +30,28 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var item in Model)
-{
+            @foreach (var question in Model)
+            {
                 <tr>
                     <td>
-                        @Html.DisplayFor(modelItem => item.Id)
+                        @Html.DisplayFor(modelItem => question.Id)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.QuestionText)
+                        @Html.DisplayFor(modelItem => question.QuestionText)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.NumOfAnswers)
+                        @Html.DisplayFor(modelItem => question.NumOfAnswers)
                     </td>
                     <td>
-                        @{IEnumerable<QuestionGroup> questionGroups = ((List<QuestionGroup>)ViewBag.QuestionGroup).Where(qg => qg.Questions.Contains(item)).ToList();}
-                        @foreach (QuestionGroup itemy in questionGroups)
+                        @foreach (QuestionGroup questionGroup in question.QuestionGroups)
                          {
-                            @itemy.QuestionGroupName
+                            @questionGroup.QuestionGroupName
                          }
                     </td>
                     <td>
-                        <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                        <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                        <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                        <a asp-action="Edit" asp-route-id="@question.Id">Edit</a> |
+                        <a asp-action="Details" asp-route-id="@question.Id">Details</a> |
+                        <a asp-action="Delete" asp-route-id="@question.Id">Delete</a>
                     </td>
                 </tr>
             }
