@@ -18,7 +18,9 @@ namespace BuddyMap.DataAccess
         public DbSet<AnswerElement> AnswerElement { get; set; }
         public DbSet<Question> Question { get; set; }
         public DbSet<QuestionGroup> QuestionGroup { get; set; }
-        public DbSet<Campaign> Campaign { get; set; }        
+        public DbSet<Campaign> Campaign { get; set; }
+        //public DbSet<QQGConnection> QQGConnection { get; set; } 
+        
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -31,7 +33,7 @@ namespace BuddyMap.DataAccess
                 .HasForeignKey(elem => elem.QuestionId);
             modelBuilder.Entity<QQGConnection>()
                .HasOne(elem => elem.QuestionGroup)
-               .WithMany(elem => elem.QQGConnection)
+               .WithMany(elem => elem.QQGConnections)
                .HasForeignKey(elem => elem.QuestionGroupId);
             //modelBuilder.Entity<AnswerGroup>()
             //    .HasMany(elem => elem.Answers)

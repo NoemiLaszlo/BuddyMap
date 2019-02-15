@@ -59,14 +59,18 @@ namespace BuddyMap.DataAccess
         {
 
             context.Database.EnsureCreated();
-            var q = context.Question.Where(question => question.Id == 2).First();            
-            context.QuestionGroup.Add(new QuestionGroup() { QuestionGroupName = "Proba1",
-                                                            Questions = new List<Question>() { q }
-                                                           });
-            var k = context.Question.Where(question => question.Id == 3).First();
-            context.QuestionGroup.Add(new QuestionGroup() { QuestionGroupName = "Proba2",
-                                                            Questions = new List<Question>() { k }
-                                                           });
+            var q1 = context.Question.Find(1);
+            var qg1 = new QuestionGroup() { QuestionGroupName = "Proba1" };
+            qg1.QQGConnections.Add(new QQGConnection() { Question = q1, QuestionGroup = qg1 });
+
+            var q2 = context.Question.Find(2);
+            var qg2 = new QuestionGroup() { QuestionGroupName = "Proba2" };
+            qg2.QQGConnections.Add(new QQGConnection() { Question = q2, QuestionGroup = qg2 });
+
+            var q3 = context.Question.Find(3);
+            qg1.QQGConnections.Add(new QQGConnection() { Question = q3, QuestionGroup = qg1 });
+            context.QuestionGroup.Add(qg1);
+            context.QuestionGroup.Add(qg2);
 
             context.SaveChanges();
         }
