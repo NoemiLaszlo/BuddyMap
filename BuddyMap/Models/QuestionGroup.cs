@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
 
 namespace BuddyMap.Models
 {
@@ -8,8 +10,10 @@ namespace BuddyMap.Models
         [Key]
         public int Id { get; set; }
         public string QuestionGroupName { get; set; }
-        public List<QQGConnection> QQGConnection { get; set; }
-        public List<Question> Questions { get; internal set; }
+        public List<QQGConnection> QQGConnections { get; set; } = new List<QQGConnection>();
+
+        [NotMapped]
+        public List<Question> Questions { get => QQGConnections?.Select(qqg => qqg.Question).ToList(); }
 
         public QuestionGroup()
         {
