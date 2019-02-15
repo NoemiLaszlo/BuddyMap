@@ -23,7 +23,7 @@ namespace BuddyMap
         public ActionResult GetQuestionCreate()
         {
             QuestionCreate questionCreate = new QuestionCreate();
-            questionCreate.Questions = GetQuestionModel();
+            questionCreate.Question = GetQuestionModel();
             questionCreate.QuestionGroups = GetQuestionGroupModel();
             return View(questionCreate);
         }
@@ -53,8 +53,9 @@ namespace BuddyMap
         // GET: Questions
         public async Task<IActionResult> Index()
         {
-            ViewBag.QuestionGroup = _context.QuestionGroup.ToList(); //QG
-            return View(await _context.Question.ToListAsync());
+            //QuestionGroup.Include(q => q.Questions)
+            var fuckoyu = await _context.Question.Include(q => q.QQGConnection).ThenInclude(qqg => qqg.QuestionGroup).ToListAsync();
+            return View(fuckoyu);
         }
 
         // GET: Questions/Details/5
@@ -79,8 +80,12 @@ namespace BuddyMap
         // GET: Questions/Create
         public IActionResult Create()
         {
-            ViewBag.QuestionGroup = _context.QuestionGroup.ToList();
-            return View();
+            IEnumerable<QuestionGroup> questionGroups = _context.QuestionGroup.ToList();
+            ViewModels.QuestionCreate questionCreate = new ViewModels.QuestionCreate()
+            {
+                QuestionGroups = questionGroups
+            };
+            return View(questionCreate);
         }
 
         // POST: Questions/Create
@@ -90,9 +95,13 @@ namespace BuddyMap
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(QuestionCreate questionCreate)
         {
+            //questionCreate.Questions.QQGConnection.Add(questionCreate.QuestionGroups.First());
             if (ModelState.IsValid)
             {
-                _context.Add(questionCreate);
+                
+                var qg = _context.QuestionGroup.Include(q => q.QQGConnections).ThenInclude(qqg => qqg.Question).First(q => questionCreate.SelectedQGId == q.Id);
+                qg.QQGConnections.Add(new QQGConnection() { Question = questionCreate.Question, QuestionGroup = qg });
+                _context.Entry(qg).State = EntityState.Modified;               
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
