@@ -29,10 +29,20 @@
         <dd>
             @Html.DisplayFor(model => model.NumOfAnswers)
         </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.QuestionGroups)
+        </dt>
+        <dd>
+            @foreach (QuestionGroup questionGroup in Model.QuestionGroups)
+            {
+                @questionGroup.QuestionGroupName
+            }
+
+        </dd>
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> 
     <a asp-action="Index">Back to List</a>
 </div>
 </body>

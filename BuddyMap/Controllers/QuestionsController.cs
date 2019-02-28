@@ -67,14 +67,14 @@ namespace BuddyMap
             }
 
             
-            var question = await _context.Question
+            var question = await _context.Question.Include("QQGConnection.QuestionGroup")
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (question == null)
             {
                 return NotFound();
             }
             //var tuple = new Tuple<Question, QuestionGroup>(question, new QuestionGroup());
-            return View();
+            return View(question);
         }
 
         // GET: Questions/Create

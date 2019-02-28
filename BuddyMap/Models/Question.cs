@@ -16,7 +16,7 @@ namespace BuddyMap.Models
         public List<QQGConnection> QQGConnection { get; set; } = new List<QQGConnection>();
 
         [NotMapped]
-        public List<QuestionGroup> QuestionGroups { get => QQGConnection?.Select(qqg => qqg.QuestionGroup).ToList(); }
+        public List<QuestionGroup>  QuestionGroups{ get => QQGConnection?.Select(qqg => qqg.QuestionGroup).ToList(); }
 
 
         public Question(int id, string questionText, int numOfAnswers, List<QQGConnection> qQGonnection)
